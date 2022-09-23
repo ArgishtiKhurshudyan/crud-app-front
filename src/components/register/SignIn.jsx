@@ -21,11 +21,11 @@ const SignIn = () => {
   const handleClick =  (e) => {
     e.preventDefault()
     dispatch(getLoginStart({credentials: credentials}))
- setTimeout(() => {
-   if(isLoginSuccess === true) {
-     navigate("/signUp")
-   }
- },300)
+ // setTimeout(() => {
+ //   // if(isLoginSuccess === true) {
+ //   //   navigate("/signUp")
+ //   // }
+ // },300)
   }
 
 

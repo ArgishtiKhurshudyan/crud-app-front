@@ -13,6 +13,8 @@ function* loginUser({payload}) {
   try {
     const response = yield call(() => axios.post("http://localhost:5000/api/auth/login", payload.credentials))
     if (response?.status === 200) {
+      console.log(response.data)
+      localStorage.setItem("access_token", response.data.token)
       yield put(getLoginSuccess(response.data));
     } else {
       yield put(getLoginFailure(response.data.message));

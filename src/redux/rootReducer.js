@@ -6,7 +6,7 @@ import color from './color/reducer';
 const rootReducer = combineReducers({
   user,
   product,
-  color
+  color,
 });
 
 export default rootReducer;

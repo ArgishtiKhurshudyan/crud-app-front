@@ -19,18 +19,22 @@ const Color = () => {
     dispatch(colorStartCreate({color: color}))
     dispatch(getColorStart())
   }
+
   const handleGetColor = () => {
     dispatch(getColorStart())
     setClicked(true)
   }
+
   const handleDeleteColor = (id) => {
     dispatch(colorDeleteStart({id: id}))
   }
+
   const handleEditColor = (id) => {
-    setIsEditing(true)
+    setIsEditing(id)
     const col = colorData.find((color) => color.id === id)
     setChangeColor(col.colorName)
   }
+
   const handleUpdateColor = (id) => {
     setIsEditing(false)
     const payload = {
@@ -65,7 +69,7 @@ const Color = () => {
             <button onClick={() =>
               handleEditColor(item.id)}>edit
             </button>
-            {isEditing && <div className="editInput">
+            {isEditing === item.id && <div className="editInput">
               <input
                 type="text"
                 placeholder="update color"
@@ -77,7 +81,6 @@ const Color = () => {
             }
           </div>
         )}
-
       </div>
     </div>
   );

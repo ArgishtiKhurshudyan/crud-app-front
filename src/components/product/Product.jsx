@@ -2,13 +2,14 @@ import React, {useRef, useState} from 'react';
 import "./product.sass"
 import {useDispatch, useSelector} from "react-redux";
 import {getProductStart, productDeleteStart, productStartCreate, productUpdateStart} from "../../redux/product/actions";
-import {colorUpdateStart} from "../../redux/color/actions";
+import Modal from "../Modal";
 
 const Product = () => {
   const [isClick, setIsClick] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState()
   const [changeProduct, setChangeProduct] = useState("")
   const [product, setProduct] = useState('')
+  const [item, setItem] = useState()
   const [formData, setFormData] = useState({
     productName: '',
     colors: ''
@@ -16,12 +17,13 @@ const Product = () => {
 
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.product)
+
   const handleCreate = () => {
     const product = {
       productName: formData.productName,
-      colors:formData.colors,
+      colors: formData.colors,
     }
-    if (formData.productName){
+    if (formData.productName) {
       dispatch(productStartCreate({product}))
     }
     return formData.productName = ""
@@ -30,12 +32,14 @@ const Product = () => {
   const handleDelete = (id) => {
     dispatch(productDeleteStart({id}))
   }
+
   const handleGet = () => {
     dispatch(getProductStart())
     setIsClick(true)
   }
-  const handleEditProduct= (id) => {
-    setIsEditing(true)
+
+  const handleEditProduct = (id) => {
+    setIsEditing(id)
     const prod = data.find((item) => item.id === id)
     setChangeProduct(prod.productName)
   }
@@ -83,27 +87,31 @@ const Product = () => {
 
       <div className="products">
         <button onClick={handleGet}>get</button>
-        {isClick && data.map((item) => (
+        {isClick && data.map((item) =>  (
             <div className="items">
               <span>{item.productName}</span>
               <button onClick={() => handleDelete(item.id)}>delete</button>
               <button onClick={() => handleEditProduct(item.id)}>edit</button>
-              {isEditing && <div className="editInput">
-                <input
-                  type="text"
-                  placeholder="update product"
-                  defaultValue={changeProduct}
-                  onChange={(e) => changeVal(e.target.value)}
-                />
-                <button onClick={() => handleUpdate(item.id)}>update</button>
-              </div>
+              {isEditing === item.id &&
+              <Modal changeProduct={changeProduct} changeVal={changeVal} handleUpdate={handleUpdate} item={item}/>
               }
             </div>
           )
         )}
+        <>
+
+        </>
       </div>
     </div>
   );
 };
 
 export default Product;
+
+{/*<input*/}
+{/*  type="text"*/}
+{/*  placeholder="update product"*/}
+{/*  defaultValue={changeProduct}*/}
+{/*  onChange={(e) => changeVal(e.target.value)}*/}
+{/*/>*/}
+{/*<button onClick={() => handleUpdate(item.id)}>update</button>*/}

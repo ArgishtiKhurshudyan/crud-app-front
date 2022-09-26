@@ -43,8 +43,6 @@ const reducer = handleActions({
     }),
 
     [productCreateSuccess]: (state, {payload}) => {
-      console.log('payloadpayloadpayload payload',payload)
-      debugger
       return {
         ...state,
         isProductCreatedStart: false,
@@ -119,15 +117,12 @@ const reducer = handleActions({
     }),
 
     [getProductSuccess]: (state, {payload}) => {
-      console.log("sacacacfas", payload?.products)
-      console.log("state data", state.data)
-      debugger
       return {
         ...state,
         isProductGetStart: false,
         isProductGetSuccess: true,
         isProductGetFailure: false,
-        data: [...state.data, ...payload?.products]
+        data: payload?.products
       }
     },
 

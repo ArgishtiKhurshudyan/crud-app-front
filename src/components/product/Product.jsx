@@ -17,8 +17,8 @@ const Product = () => {
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.product)
   const {colorData} = useSelector(state => state.color)
-  console.log("data",data)
-  useEffect(()=> {
+
+  useEffect(() => {
     dispatch(getColorStart())
   }, [])
 
@@ -29,9 +29,12 @@ const Product = () => {
     }
     if (formData.productName) {
       dispatch(productStartCreate({product}))
-
     }
-    // return formData.productName = ""
+    return {
+      fromData: formData.productName = "",
+      colorData: formData.colors = []
+    }
+
   }
 
   const handleDelete = (id) => {
@@ -41,7 +44,7 @@ const Product = () => {
   const handleGet = () => {
     dispatch(getProductStart())
     setIsClick(true)
-    // console.log("colorData", colorData)
+
   }
 
   const handleEditProduct = (id) => {
@@ -93,11 +96,11 @@ const Product = () => {
 
       <div className="products">
         <button onClick={handleGet}>get</button>
-        {data?.map((item) => (
+        {isClick && data?.map((item) => (
             <div className="items">
               <span>product: {item?.productName}</span>
               <div> color:{
-                item?.colors?.length && item?.colors?.map((color) => {
+                item.colors?.map((color) => {
                   return (
                     <span style={{margin: "5px"}}>{
                       color.colorName

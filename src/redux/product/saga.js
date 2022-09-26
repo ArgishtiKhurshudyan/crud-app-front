@@ -19,7 +19,7 @@ const token = localStorage.getItem('access_token')
 
 function* createProduct({payload}) {
   try {
-    const response = yield call(() => axios.post("http://localhost:5000/api/product", payload.product, {headers: {"authorization": `Bearer ${token}`}}))
+    const response = yield call(() => axios.post("http://localhost:5000/api/product", payload.product,  {headers: {"authorization": `Bearer ${token}`}}))
     console.log("res", response)
     if (response?.status === 200) {
       yield put(productCreateSuccess(response.data.data));
@@ -50,9 +50,9 @@ function* deleteProduct({payload}) {
 }
 function* updateProduct({payload}) {
   try {
-    const response = yield call(() => axios.put("http://localhost:5000/api/product/id", {headers: {"authorization": `Bearer ${token}`}}))
+    const response = yield call(() => axios.put(`http://localhost:5000/api/product/${payload.id}`, payload))
     if (response?.status === 200) {
-      yield put(productUpdateSuccess(response.data));
+      yield put(productUpdateSuccess(payload));
     } else {
       yield put(productUpdateFailure(response.data.message));
     }

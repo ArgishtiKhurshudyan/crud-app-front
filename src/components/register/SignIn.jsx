@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import "./register.scss"
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -18,24 +18,36 @@ const SignIn = () => {
     setCredentials((prev) => ({...prev, [e.target.id]: e.target.value}));
   };
 
-  const handleClick =  (e) => {
+  const handleClick = (e) => {
     e.preventDefault()
     dispatch(getLoginStart({credentials: credentials}))
- // setTimeout(() => {
- //   // if(isLoginSuccess === true) {
- //   //   navigate("/signUp")
- //   // }
- // },300)
+    // setTimeout(() => {
+    //   // if(isLoginSuccess === true) {
+    //   //   navigate("/signUp")
+    //   // }
+    // },300)
   }
 
 
   return (
     <div className="register-container">
-     <form onSubmit={handleClick} className="register-form">
+      <form onSubmit={handleClick} className="register-form">
         <label className="reg-label">Email</label>
-        <input type="email" placeholder="email" id="email" onChange={handleChange}/>
+        <input
+          type="email"
+          placeholder="email"
+          id="email"
+          onChange={handleChange}
+          required
+        />
         <label className="reg-label">Password</label>
-        <input type="password" placeholder="password" id="password" onChange={handleChange}/>
+        <input
+          type="password"
+          placeholder="password"
+          id="password"
+          onChange={handleChange}
+          required
+        />
         <button type="submit">{isLoginStart ? "loading..." : "Submit"}</button>
       </form>
       <Link to="/signUp">

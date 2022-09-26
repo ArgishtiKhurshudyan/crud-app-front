@@ -5,7 +5,6 @@ import Color from "./components/color/Color";
 import Product from "./components/product/Product";
 
 function App() {
-  console.log(111)
   return (
     <div className="App">
  <BrowserRouter>

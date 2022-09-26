@@ -65,13 +65,19 @@ const reducer = handleActions({
       isProductUpdatedFailure: false,
     }),
 
-    [productUpdateSuccess]: (state, {payload}) => ({
-      ...state,
-      isProductUpdatedStart: false,
-      isProductUpdatedSuccess: true,
-      isProductUpdatedFailure: false,
-      data: payload
-    }),
+    [productUpdateSuccess]: (state, {payload}) => {
+      const updated = [...state.data]
+      const updatedIndex = state.data.findIndex((el) => el.id === payload.id)
+      updated[updatedIndex] = {...updated[updatedIndex], ...payload}
+      return {
+        ...state,
+        isProductUpdatedStart: false,
+        isProductUpdatedSuccess: true,
+        isProductUpdatedFailure: false,
+        data:  updated
+      }
+
+    },
 
     [productUpdateFailure]: (state, {payload}) => ({
       ...state,
@@ -109,8 +115,6 @@ const reducer = handleActions({
     }),
 
     [getProductSuccess]: (state, {payload}) => {
-      console.log('payload', payload)
-      debugger
       return {
         ...state,
         isProductGetStart: false,

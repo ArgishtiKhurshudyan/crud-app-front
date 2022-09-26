@@ -3,21 +3,22 @@ import "./product.sass"
 import {useDispatch, useSelector} from "react-redux";
 import {getProductStart, productDeleteStart, productStartCreate, productUpdateStart} from "../../redux/product/actions";
 import Modal from "../Modal";
+import {getColorStart} from "../../redux/color/actions";
 
 const Product = () => {
   const [isClick, setIsClick] = useState(false)
   const [isEditing, setIsEditing] = useState()
   const [changeProduct, setChangeProduct] = useState("")
   const [product, setProduct] = useState('')
-  const [item, setItem] = useState()
   const [formData, setFormData] = useState({
     productName: '',
-    colors: ''
+    colors: []
   })
-
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.product)
+  const {colorData} = useSelector(state => state.color)
 
+  // console.log("data", data?.[0].colors?.[0].colorName)
   const handleCreate = () => {
     const product = {
       productName: formData.productName,
@@ -36,6 +37,8 @@ const Product = () => {
   const handleGet = () => {
     dispatch(getProductStart())
     setIsClick(true)
+    dispatch(getColorStart())
+    console.log("colorData", colorData)
   }
 
   const handleEditProduct = (id) => {
@@ -89,7 +92,17 @@ const Product = () => {
         <button onClick={handleGet}>get</button>
         {isClick && data.map((item) =>  (
             <div className="items">
-              <span>{item.productName}</span>
+              <span>product:&nbsp; {item.productName}</span>
+              <div> color:&nbsp; {
+                item.colors.map((color) => {
+                  return (
+                    <span>{
+                      color.colorName
+                    }</span>
+                  )
+                })
+              }
+              </div>
               <button onClick={() => handleDelete(item.id)}>delete</button>
               <button onClick={() => handleEditProduct(item.id)}>edit</button>
               {isEditing === item.id &&
@@ -99,7 +112,16 @@ const Product = () => {
           )
         )}
         <>
+          {colorData.map((item) => (
+            <div className="colors">
+              <h5 onClick={(e) => {
+           formData.colors.push(item.id)
+              }}>
+                {item.colorName}
+              </h5>
+            </div>
 
+          ))}
         </>
       </div>
     </div>
@@ -107,11 +129,3 @@ const Product = () => {
 };
 
 export default Product;
-
-{/*<input*/}
-{/*  type="text"*/}
-{/*  placeholder="update product"*/}
-{/*  defaultValue={changeProduct}*/}
-{/*  onChange={(e) => changeVal(e.target.value)}*/}
-{/*/>*/}
-{/*<button onClick={() => handleUpdate(item.id)}>update</button>*/}

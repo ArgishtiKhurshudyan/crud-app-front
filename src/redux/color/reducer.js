@@ -30,7 +30,7 @@ const initialState = {
   isColorGetStart: false,
   isColorGetSuccess: false,
   isColorGetFailure: false,
-  data: {},
+  colData: {},
   colorData: [],
   errorMessage: '',
 }

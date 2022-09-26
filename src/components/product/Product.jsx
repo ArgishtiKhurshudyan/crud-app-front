@@ -13,15 +13,18 @@ const Product = () => {
     productName: '',
     colors: ''
   })
+
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.product)
-
   const handleCreate = () => {
     const product = {
       productName: formData.productName,
-      colors: formData.colors,
+      colors:formData.colors,
     }
-    dispatch(productStartCreate({product}))
+    if (formData.productName){
+      dispatch(productStartCreate({product}))
+    }
+    return formData.productName = ""
   }
 
   const handleDelete = (id) => {
@@ -30,7 +33,6 @@ const Product = () => {
   const handleGet = () => {
     dispatch(getProductStart())
     setIsClick(true)
-    console.log("data", data)
   }
   const handleEditProduct= (id) => {
     setIsEditing(true)
@@ -67,15 +69,15 @@ const Product = () => {
           type="text"
           placeholder="product name"
           value={formData['productName']}
+          required
           onChange={(e) => handleChange('productName', e.target.value)}
         />
         <h3>product color</h3>
-        {/*<input*/}
-        {/*  type="number"*/}
-        {/*  placeholder="product color"*/}
-        {/*  value={formData['colors']}*/}
-        {/*  onChange={(e) => handleChange('colors', e.target.value)}*/}
-        {/*/>*/}
+        <input
+          placeholder="product color"
+          value={formData['colors']}
+          onChange={(e) => handleChange('colors', e.target.value)}
+        />
         <button onClick={handleCreate}>create product</button>
       </div>
 
@@ -97,8 +99,6 @@ const Product = () => {
               </div>
               }
             </div>
-
-
           )
         )}
       </div>

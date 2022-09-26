@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import "./color.sass"
 import {useDispatch, useSelector} from "react-redux";
 import {colorDeleteStart, colorStartCreate, colorUpdateStart, getColorStart} from "../../redux/color/actions";
@@ -13,11 +13,13 @@ const Color = () => {
   const dispatch = useDispatch()
 
   const handleCreateColor = () => {
+
     let color = {
       colorName: colorName.current.value
     }
     dispatch(colorStartCreate({color: color}))
     dispatch(getColorStart())
+    return colorName.current.value = ''
   }
 
   const handleGetColor = () => {

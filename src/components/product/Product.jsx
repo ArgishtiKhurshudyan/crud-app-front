@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import "./product.sass"
 import {useDispatch, useSelector} from "react-redux";
 import {getProductStart, productDeleteStart, productStartCreate, productUpdateStart} from "../../redux/product/actions";
@@ -17,8 +17,11 @@ const Product = () => {
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.product)
   const {colorData} = useSelector(state => state.color)
+  console.log("data",data)
+  useEffect(()=> {
+    dispatch(getColorStart())
+  }, [])
 
-  // console.log("data", data?.[0].colors?.[0].colorName)
   const handleCreate = () => {
     const product = {
       productName: formData.productName,
@@ -26,8 +29,9 @@ const Product = () => {
     }
     if (formData.productName) {
       dispatch(productStartCreate({product}))
+
     }
-    return formData.productName = ""
+    // return formData.productName = ""
   }
 
   const handleDelete = (id) => {
@@ -37,18 +41,17 @@ const Product = () => {
   const handleGet = () => {
     dispatch(getProductStart())
     setIsClick(true)
-    dispatch(getColorStart())
-    console.log("colorData", colorData)
+    // console.log("colorData", colorData)
   }
 
   const handleEditProduct = (id) => {
     setIsEditing(id)
-    const prod = data.find((item) => item.id === id)
+    const prod = data?.find((item) => item.id === id)
     setChangeProduct(prod.productName)
   }
 
   const handleUpdate = (id) => {
-    setIsEditing(false)
+    setIsEditing('')
     const payload = {
       id: id,
       productName: product
@@ -90,13 +93,13 @@ const Product = () => {
 
       <div className="products">
         <button onClick={handleGet}>get</button>
-        {isClick && data.map((item) =>  (
+        {data?.map((item) => (
             <div className="items">
-              <span>product:&nbsp; {item.productName}</span>
-              <div> color:&nbsp; {
-                item.colors.map((color) => {
+              <span>product: {item?.productName}</span>
+              <div> color:{
+                item?.colors?.length && item?.colors?.map((color) => {
                   return (
-                    <span>{
+                    <span style={{margin: "5px"}}>{
                       color.colorName
                     }</span>
                   )
@@ -112,15 +115,14 @@ const Product = () => {
           )
         )}
         <>
-          {colorData.map((item) => (
+          {colorData?.map((item) => (
             <div className="colors">
               <h5 onClick={(e) => {
-           formData.colors.push(item.id)
+                formData.colors.push(item.id)
               }}>
                 {item.colorName}
               </h5>
             </div>
-
           ))}
         </>
       </div>

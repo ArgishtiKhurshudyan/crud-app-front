@@ -18,8 +18,9 @@ import {
 const token = localStorage.getItem('access_token')
 
 function* createProduct({payload}) {
+  console.log('payload', payload)
   try {
-    const response = yield call(() => axios.post("http://localhost:5000/api/product", payload.product,  {headers: {"authorization": `Bearer ${token}`}}))
+    const response = yield call(() => axios.post("http://localhost:5000/api/product", payload.product,   {headers: {"authorization": `Bearer ${token}`}}))
     console.log("res", response)
     if (response?.status === 200) {
       yield put(productCreateSuccess(response.data.data));

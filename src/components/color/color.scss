@@ -1,0 +1,87 @@
+.color-container {
+  width: 100%;
+  height: 50vh auto;
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+
+  .create-container {
+    width: 400px;
+
+    input {
+      height: 35px;
+      width: 200px;
+      border: 1px solid orange;
+      outline: none;
+    }
+
+    button {
+      background-color: transparent;
+      height: 35px;
+      border: 1px solid black;
+      border-radius: 5px;
+      font-weight: 500;
+      font-size: 18px;
+      margin: 5px;
+      cursor: pointer;
+      transition: 0.5s ease;
+
+      &:hover {
+        background-color: rgba(26, 133, 203, 0.34);
+        transition: 0.5s ease;
+
+      }
+    }
+  }
+
+  .colors {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    background-color: #2d2b2b;
+
+    h1 {
+      color:white;
+      font-size: 25px;
+      font-weight: 500;
+    }
+    .getColors-btn {
+      width: 120px;
+      height: 35px;
+      background-color: orange;
+      border: none;
+      border-radius:0 10px 10px 0;
+      cursor: pointer;
+      color: #383333;
+      font-size: 19px;
+      font-weight: 400;
+    }
+
+    .item {
+      width: 100%;
+      .color-title-div {
+        width: 100%;
+        height: 60px;
+        background-color: #484646;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 5px 0;
+
+        .changeBtn-div {
+          width: 83px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+      button {
+        background-color: transparent;
+        cursor: pointer;
+        color: white;
+        border: none;
+      }
+        }
+      }
+    }
+  }
+
+}

@@ -35,13 +35,16 @@ const reducer = handleActions(
       isLoginFailure: false,
       data: payload.details
     }),
-    [getLoginFailure]: (state, {payload}) => ({
-      ...state,
-      isLoginStart: false,
-      isLoginSuccess: false,
-      isLoginFailure: true,
-      errorMessage: payload.data
-    }),
+    [getLoginFailure]: (state, {payload}) => {
+      return {
+        ...state,
+        isLoginStart: false,
+        isLoginSuccess: false,
+        isLoginFailure: true,
+        errorMessage: payload
+      }
+
+    },
     [getRegisterStart]: (state) => ({
       ...state,
       isRegisterStart: true,
@@ -56,14 +59,16 @@ const reducer = handleActions(
       data: payload,
 
     }),
-    [getRegisterFailure]: (state, {payload}) => ({
-      ...state,
-      isRegisterData: false,
-      isRegisterSuccess: false,
-      isRegisterFailure: true,
-      errorMessage: payload.data
+    [getRegisterFailure]: (state, {payload}) => {
+      return {
+        ...state,
+        isRegisterData: false,
+        isRegisterSuccess: false,
+        isRegisterFailure: true,
+        errorMessage: payload
 
-    }),
+      }
+    },
   },
   initialState
 );

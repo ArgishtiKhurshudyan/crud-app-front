@@ -2,8 +2,14 @@ import React from 'react';
 
 const Modal = ({item, changeVal, changeProduct, handleUpdate}) => {
 
+  const style = {
+    // position: "absolute",
+    // bottom:"-38px",
+
+  }
+
   return (
-    <div>
+    <div style={style} >
       <input
         type="text"
         placeholder="update product"

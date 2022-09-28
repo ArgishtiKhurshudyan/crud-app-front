@@ -18,8 +18,9 @@ function* loginUser({payload}) {
       yield put(getLoginSuccess(response.data));
     } else {
       yield put(getLoginFailure(response.data.message));
+      console.log("response", response)
     }
-    console.log(response)
+
   } catch (e) {
     if (e?.response?.data) {
       yield put(getLoginFailure(e?.response?.data?.message));

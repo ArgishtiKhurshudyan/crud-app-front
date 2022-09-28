@@ -4,14 +4,18 @@ import "./register.scss"
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getLoginStart} from "../../redux/user/actions";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const SignIn = () => {
   const [credentials, setCredentials] = useState({
     username: undefined,
     password: undefined,
   });
+  const [closeIcon, setCloseIcon] = useState(false)
   const navigate = useNavigate()
-  const {isLoginStart, isLoginSuccess, isLoginFailure, data} = useSelector(state => state.user)
+  const {isLoginStart, isLoginSuccess, isLoginFailure, errorMessage} = useSelector(state => state.user)
+  const [message, setMessage] = useState(errorMessage)
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -21,14 +25,20 @@ const SignIn = () => {
   const handleClick = (e) => {
     e.preventDefault()
     dispatch(getLoginStart({credentials: credentials}))
-    // setTimeout(() => {
-    //   // if(isLoginSuccess === true) {
-    //   //   navigate("/signUp")
-    //   // }
-    // },300)
+    if (isLoginSuccess) {
+      navigate("/product")
+    }
   }
 
+  useEffect(() => {
+    if (isLoginFailure) {
+      setMessage(errorMessage);
+    }
+  }, [isLoginFailure])
 
+  const handleClickIcon = (e) => {
+    setCloseIcon(!closeIcon)
+  }
   return (
     <div className="register-container">
       <form onSubmit={handleClick} className="register-form">
@@ -40,19 +50,25 @@ const SignIn = () => {
           onChange={handleChange}
           required
         />
-        <label className="reg-label">Password</label>
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          onChange={handleChange}
-          required
-        />
+        <div className="closeIcon">
+          <label className="reg-label">Password</label>
+          <input
+            type={closeIcon ? "text" : "password"}
+            placeholder="password"
+            id="password"
+            onChange={handleChange}
+            required
+          />
+          <div onClick={handleClickIcon} className="icon">{closeIcon ? <RemoveRedEyeIcon/> :
+            <VisibilityOffIcon/>}</div>
+        </div>
         <button type="submit">{isLoginStart ? "loading..." : "Submit"}</button>
+        <Link to="/signUp" style={{width: "90px"}}>
+          <button className="signUp-btn">signUp</button>
+        </Link>
+        <div style={{color: 'red'}}>{message}</div>
       </form>
-      <Link to="/signUp">
-        <button>sign up</button>
-      </Link>
+
     </div>
 
   );
